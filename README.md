@@ -10,3 +10,7 @@ For the likely one other person who's ever seen my personal GitHub repo, you'll 
 ## Version 1
 - Under the `v1` folder (duh)
 - Intention is to craft all matrix data structures and any associated operations and equations by hand. I'll have to really grasp what the hell I've been flipping through on Coursera to see the same results when analyzing cat pictures.
+
+## Journal
+
+I like to take notes as I reason through programming exercises, so I'll keep a reverse chronological journal here.
