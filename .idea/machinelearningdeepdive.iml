@@ -5,7 +5,7 @@
       <sourceFolder url="file://$MODULE_DIR$/v1/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/v1/test" isTestSource="false" />
     </content>
-    <orderEntry type="inheritedJdk" />
+    <orderEntry type="jdk" jdkName="Python 3.6 (machinelearningdeepdive)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
   <component name="TestRunnerService">
