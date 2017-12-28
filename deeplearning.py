@@ -11,22 +11,31 @@ class Classifier(object):
     def train(self, training_input, training_output, max_iterations=10000, learning_rate=0.005):
         m = len(training_input)
         transformed_in = normalize_data(training_input, m)
-        weights, bias = np.zeros((len(transformed_in), 1)), 0
+        weights = np.zeros((len(transformed_in), 1))
+        bias = 0
 
         _iterations = 0
         cost = 2 ** np.MAXDIMS - 1
         while cost >= learning_rate and _iterations < max_iterations:
-            a = sigmoid(np.dot(weights.T, transformed_in) + bias)
-            cost = np.squeeze(np.sum(-(training_output * np.log(a) + (1 - training_output) * np.log(1 - a))) / m)
+            cost, differences = self._calculate_intermediate_results(weights, bias, transformed_in, training_output, m)
 
-            weights = weights - learning_rate * (np.dot(transformed_in, (a - training_output).T) / m)
-            bias = bias - learning_rate * (np.sum(a - training_output) / m)
+            # this causes all weights to step toward the global minimum in n-dimensional space
+            weights = weights - learning_rate * (np.dot(transformed_in, differences.T) / m)
+            bias = bias - learning_rate * (np.sum(differences) / m)
             _iterations = _iterations + 1
 
         self.trained_weights = weights
         self.trained_bias = bias
 
         return _iterations
+
+    def _calculate_intermediate_results(self, in_weights, in_bias, in_train, out_train, m):
+        # This step is identical to actually getting a prediction
+        a = sigmoid(np.dot(in_weights.T, in_train) + in_bias)
+        # Quantify how far off the predictions were from the results, averaged over each sample
+        cost = np.squeeze(-np.sum(out_train * np.log(a) + (1 - out_train) * np.log(1 - a)) / m)
+        # TODO re-learn why the above cost is calculated this way
+        return cost, a - out_train
 
     def predict_results(self, test_input):
         _predictions = sigmoid(np.dot(self.trained_weights.T, test_input) + self.trained_bias)
