@@ -12,12 +12,13 @@ class Classifier(object):
         m = len(training_input)
         transformed_in = normalize_data(training_input, m)
         weights = np.zeros((len(transformed_in), 1))
-        bias = 0
+        bias = np.zeros((1, 1))
 
         _iterations = 0
         cost = 2 ** np.MAXDIMS - 1
         while cost >= learning_rate and _iterations < max_iterations:
-            cost, differences = self._calculate_intermediate_results(weights, bias, transformed_in, training_output, m)
+            cost, differences = self._calculate_intermediate_results(
+                weights, bias, transformed_in, training_output, m, sigmoid)
 
             # this causes all weights to step toward the global minimum in n-dimensional space
             weights = weights - learning_rate * (np.dot(transformed_in, differences.T) / m)
@@ -29,9 +30,9 @@ class Classifier(object):
 
         return _iterations
 
-    def _calculate_intermediate_results(self, in_weights, in_bias, in_train, out_train, m):
+    def _calculate_intermediate_results(self, in_weights, in_bias, in_train, out_train, m, activation):
         # This step is identical to actually getting a prediction
-        a = sigmoid(np.dot(in_weights.T, in_train) + in_bias)
+        a = activation(np.dot(in_weights.T, in_train) + in_bias)
         # Quantify how far off the predictions were from the results, averaged over each sample
         cost = np.squeeze(-np.sum(out_train * np.log(a) + (1 - out_train) * np.log(1 - a)) / m)
         # TODO re-learn why the above cost is calculated this way
