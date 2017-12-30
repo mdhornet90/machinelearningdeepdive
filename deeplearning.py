@@ -5,26 +5,25 @@ import time
 
 class ShallowLearningClassifier(object):
     def __init__(self, hidden_unit_count):
-        self.trained_weights = None
-        self.trained_bias = None
         self.hidden_unit_count = hidden_unit_count
+        self.hidden_weights = None
+        self.hidden_bias = None
+        self.output_weights = None
+        self.output_bias = None
 
     def train(self, training_input, training_output, max_iterations=10000, learning_rate=0.005):
         m = len(training_input)
         transformed_in = normalize_data(training_input, m)
-        hidden_weights = np.random.randn(len(transformed_in), self.hidden_unit_count) * 0.01
-        hidden_bias = np.zeros((self.hidden_unit_count, 1))
-        output_weights = np.random.randn(self.hidden_unit_count, 1) * 0.01
-        output_bias = np.zeros((1, 1))
+        self.hidden_weights = np.random.randn(len(transformed_in), self.hidden_unit_count) * 0.01
+        self.hidden_bias = np.zeros((self.hidden_unit_count, 1))
+        self.output_weights = np.random.randn(self.hidden_unit_count, 1) * 0.01
+        self.output_bias = np.zeros((1, 1))
 
         _iterations = 0
         cost = 2 ** np.MAXDIMS - 1
         while cost >= learning_rate and _iterations < max_iterations:
             # forward propagation
-            z_hidden = calculate_z(transformed_in, hidden_weights, hidden_bias)
-            a_hidden = relu(z_hidden)
-            z_output = calculate_z(a_hidden, output_weights, output_bias)
-            a_output = sigmoid(z_output)
+            z_output, a_output, z_hidden, a_hidden = self.forward_propagation(transformed_in)
 
             # calculate cost
             cost = calculate_cost(a_output, training_output, m)
@@ -38,22 +37,25 @@ class ShallowLearningClassifier(object):
             d_hidden_bias = np.sum(d_z_hidden, axis=1, keepdims=True) / m
 
             # update weights
-            output_weights = output_weights - learning_rate * d_output_weights
-            output_bias = output_bias - learning_rate * d_output_bias
-            hidden_weights = hidden_weights - learning_rate * d_hidden_weights
-            hidden_bias = hidden_bias - learning_rate * d_hidden_bias
+            self.output_weights = self.output_weights - learning_rate * d_output_weights
+            self.output_bias = self.output_bias - learning_rate * d_output_bias
+            self.hidden_weights = self.hidden_weights - learning_rate * d_hidden_weights
+            self.hidden_bias = self.hidden_bias - learning_rate * d_hidden_bias
 
             _iterations = _iterations + 1
 
-        self.trained_weights = output_weights
-        self.trained_bias = output_bias
-
         return _iterations
 
-    def forward_propagation(self):
+    def forward_propagation(self, input_data):
+        z_hidden = calculate_z(input_data, self.hidden_weights, self.hidden_bias)
+        a_hidden = relu(z_hidden)
+        z_output = calculate_z(a_hidden, self.output_weights, self.output_bias)
+        a_output = sigmoid(z_output)
+
+        return z_output, a_output, z_hidden, a_hidden
 
     def predict_results(self, test_input):
-        _predictions = sigmoid(calculate_z(test_input, self.trained_weights, self.trained_bias))
+        _predictions = sigmoid(self.forward_propagation(test_input)[0])
         _predictions[_predictions > 0.5] = 1
         _predictions[_predictions <= 0.5] = 0
 
