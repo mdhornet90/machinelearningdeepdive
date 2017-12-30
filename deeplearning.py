@@ -3,7 +3,7 @@ import numpy as np
 import time
 
 
-class Classifier(object):
+class LinearClassifier(object):
     def __init__(self):
         self.trained_weights = None
         self.trained_bias = None
@@ -63,7 +63,7 @@ if __name__ == '__main__':
         train_in = train['train_set_x'][:]
         train_out = train['train_set_y'][:]
 
-    classifier = Classifier()
+    classifier = LinearClassifier()
     start = time.time()
     iterations = classifier.train(train_in, train_out)
     end = time.time()
