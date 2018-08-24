@@ -1,0 +1,4 @@
+### 7/9/2018
+Christmas vacation is a great time to play around with fun stuff but life certainly has a way of happening. For the first time in a while I actually feel like taking this on again, so I'm blowing away everything I've written and starting fresh. While Coursera classes are helpful in introducing the concepts, they babysit you way too much with pre-written code. I need to get a feel for coding like a data scientist from the ground up.
+
+In that spirit I'm also an engineer, and tested code is important to me. I'm going to try to figure out ways to TDD this code if at all possible. I expect when trying to figure out the shape of the problem it's going to be a crap shoot, but as I get more of an intuition for how to write this kind of code, finding the seams for testing will get easier.
