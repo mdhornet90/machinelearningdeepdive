@@ -26,3 +26,8 @@ The more interesting part was using R^2 to see how the predictions are correlate
 If I had to interpret this subjectively, I would guess that the total sum of squares is establishing a baseline for how much expected variance there is between all of the outputs - all of those outputs are independent from one another, so it's supposed to be the background noise inherent in the problem?
 
 In general, the more important value is the RSS, from what I've researched. The smaller that number is, the smaller the ratio between it at the total and hence the closer to zero. A large RSS means the predicated values are skewing wildly from the actual values and don't really explain much. This is not to say that a high R^2 value necessarily means that your model is good, just that it fits the test data you've fed it.
+
+#### Next up
+I'm going to attempt to flip this somewhat and train it to recognize a constant value added to each number. I would expect the weight to be 1 and the bias to be 10.
+
+Hmm, so it didn't exactly go as planned. I had to turn the learning rate waaaaay up and set the weight to 1. Perhaps these models are too simple to effectively use regression and I should just jump in to something more complex. Another thing to note is that the R^2 value was exceptionally high despite the predictions being way off, so it's indeed true that R^2 is not a reliable indicator of a good fit.
