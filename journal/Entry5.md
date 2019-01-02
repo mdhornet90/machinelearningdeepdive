@@ -31,3 +31,5 @@ In general, the more important value is the RSS, from what I've researched. The 
 I'm going to attempt to flip this somewhat and train it to recognize a constant value added to each number. I would expect the weight to be 1 and the bias to be 10.
 
 Hmm, so it didn't exactly go as planned. I had to turn the learning rate waaaaay up and set the weight to 1. Perhaps these models are too simple to effectively use regression and I should just jump in to something more complex. Another thing to note is that the R^2 value was exceptionally high despite the predictions being way off, so it's indeed true that R^2 is not a reliable indicator of a good fit.
+
+I'll try another multiplier, but it'll be non-linear - 2x^2 + 6x + 4
