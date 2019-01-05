@@ -1,5 +1,10 @@
-with open('datasets/non_linear_train') as file:
-    numbers = [int(line.split()[0]) for line in file.readlines()]
+import csv
+from simple_linear_model import SimpleLinearModel
 
-with open('datasets/non_linear_train', 'w') as file:
-    file.writelines(['{} {}\n'.format(number, 2 * number * number + 6 * number + 4) for number in numbers])
+def getModel(dataset_name):
+    with open('datasets/{}'.format(dataset_name)) as file:
+        headers, *data = csv.reader(file, delimiter=',')
+    return SimpleLinearModel(headers, data)
+
+if __name__ == "__main__":
+    getModel('winequality-red.csv')
