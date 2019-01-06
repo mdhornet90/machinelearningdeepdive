@@ -11,10 +11,8 @@
             "program": "${file}",
             "console": "integratedTerminal",
             "args": [
-                // "${input:train_data_file_name}",
-                // "${input:test_data_file_name}"
-                "non_linear_train",
-                "non_linear_test"
+                "double_train",
+                "double_test"
             ]
         },
         {
